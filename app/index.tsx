@@ -1,3 +1,4 @@
+import '../polyfills';
 import { useEffect } from 'react';
 import { View, Text, StyleSheet, ActivityIndicator } from 'react-native';
 import { useAuth } from '@/context/AuthContext';
@@ -8,23 +9,34 @@ export default function Index() {
   const router = useRouter();
 
   useEffect(() => {
-    let timeoutId: NodeJS.Timeout;
+    let timeoutId: ReturnType<typeof setTimeout>;
 
     if (!isLoading) {
       timeoutId = setTimeout(() => {
         if (!user) {
           router.replace('/auth/login');
         } else {
+          console.log('Index.tsx routing user:', {
+            user_type: user.user_type,
+            id: user.id,
+            email: user.email
+          });
           // Route based on user type
           switch (user.user_type) {
             case 'customer':
+              console.log('Routing to customer dashboard');
               router.replace('/(customer)');
               break;
             case 'business':
-            case 'staff':
+              console.log('Routing to business dashboard');
               router.replace('/(business)');
               break;
+            case 'staff':
+              console.log('Routing to staff dashboard');
+              router.replace('/(staff)');
+              break;
             default:
+              console.log('Routing to login (unknown user type)');
               router.replace('/auth/login');
           }
         }

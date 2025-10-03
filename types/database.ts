@@ -16,6 +16,10 @@ export interface Database {
           user_type: 'customer' | 'business' | 'staff'
           name: string
           phone: string | null
+          is_vip: boolean
+          birthday: string | null
+          notes: string | null
+          created_by: string | null
           created_at: string
           updated_at: string
         }
@@ -25,6 +29,10 @@ export interface Database {
           user_type: 'customer' | 'business' | 'staff'
           name: string
           phone?: string | null
+          is_vip?: boolean
+          birthday?: string | null
+          notes?: string | null
+          created_by?: string | null
           created_at?: string
           updated_at?: string
         }
@@ -34,6 +42,10 @@ export interface Database {
           user_type?: 'customer' | 'business' | 'staff'
           name?: string
           phone?: string | null
+          is_vip?: boolean
+          birthday?: string | null
+          notes?: string | null
+          created_by?: string | null
           created_at?: string
           updated_at?: string
         }
@@ -41,27 +53,39 @@ export interface Database {
       customers: {
         Row: {
           id: string
+          user_id: string
           first_name: string
           last_name: string
+          email: string | null
+          phone: string
           birthday: string | null
           favorite_businesses: string[]
           created_at: string
+          updated_at: string
         }
         Insert: {
-          id: string
+          id?: string
+          user_id: string
           first_name: string
           last_name: string
+          email?: string | null
+          phone: string
           birthday?: string | null
           favorite_businesses?: string[]
           created_at?: string
+          updated_at?: string
         }
         Update: {
           id?: string
+          user_id?: string
           first_name?: string
           last_name?: string
+          email?: string | null
+          phone?: string
           birthday?: string | null
           favorite_businesses?: string[]
           created_at?: string
+          updated_at?: string
         }
       }
       businesses: {
@@ -76,6 +100,7 @@ export interface Database {
           exterior_photo: string | null
           interior_photo: string | null
           description: string | null
+          owner_id: string
           created_at: string
         }
         Insert: {
@@ -89,6 +114,7 @@ export interface Database {
           exterior_photo?: string | null
           interior_photo?: string | null
           description?: string | null
+          owner_id: string
           created_at?: string
         }
         Update: {
@@ -102,6 +128,7 @@ export interface Database {
           exterior_photo?: string | null
           interior_photo?: string | null
           description?: string | null
+          owner_id?: string
           created_at?: string
         }
       }
@@ -109,25 +136,66 @@ export interface Database {
         Row: {
           id: string
           business_id: string
+          name: string | null
+          email: string | null
+          phone: string | null
           position: string
+          description: string | null
           can_take_appointments: boolean
           avatar: string | null
+          user_id: string | null
+          is_active: boolean
           created_at: string
+          updated_at: string
         }
         Insert: {
-          id: string
+          id?: string
           business_id: string
+          name?: string | null
+          email?: string | null
+          phone?: string | null
           position: string
+          description?: string | null
           can_take_appointments?: boolean
           avatar?: string | null
+          user_id?: string | null
+          is_active?: boolean
           created_at?: string
+          updated_at?: string
         }
         Update: {
           id?: string
           business_id?: string
+          name?: string | null
+          email?: string | null
+          phone?: string | null
           position?: string
+          description?: string | null
           can_take_appointments?: boolean
           avatar?: string | null
+          user_id?: string | null
+          is_active?: boolean
+          created_at?: string
+          updated_at?: string
+        }
+      }
+      staff_services: {
+        Row: {
+          id: string
+          staff_id: string
+          service_id: string
+          created_at: string
+        }
+        Insert: {
+          id?: string
+          staff_id: string
+          service_id: string
+          created_at?: string
+        }
+        Update: {
+          id?: string
+          staff_id?: string
+          service_id?: string
           created_at?: string
         }
       }
@@ -207,6 +275,7 @@ export interface Database {
           end_time: string
           status: 'pending' | 'confirmed' | 'cancelled' | 'completed'
           notes: string | null
+          is_vip_appointment: boolean
           created_at: string
           updated_at: string
         }
@@ -221,6 +290,7 @@ export interface Database {
           end_time: string
           status?: 'pending' | 'confirmed' | 'cancelled' | 'completed'
           notes?: string | null
+          is_vip_appointment?: boolean
           created_at?: string
           updated_at?: string
         }
@@ -235,8 +305,111 @@ export interface Database {
           end_time?: string
           status?: 'pending' | 'confirmed' | 'cancelled' | 'completed'
           notes?: string | null
+          is_vip_appointment?: boolean
           created_at?: string
           updated_at?: string
+        }
+      }
+      business_vip_customers: {
+        Row: {
+          id: string
+          business_id: string
+          customer_id: string
+          vip_since: string
+          vip_notes: string | null
+          created_at: string
+          updated_at: string
+        }
+        Insert: {
+          id?: string
+          business_id: string
+          customer_id: string
+          vip_since?: string
+          vip_notes?: string | null
+          created_at?: string
+          updated_at?: string
+        }
+        Update: {
+          id?: string
+          business_id?: string
+          customer_id?: string
+          vip_since?: string
+          vip_notes?: string | null
+          created_at?: string
+          updated_at?: string
+        }
+      }
+      business_customers: {
+        Row: {
+          id: string
+          business_id: string
+          customer_id: string
+          added_date: string
+          customer_notes: string | null
+          is_active: boolean
+          last_contact_date: string | null
+          total_appointments: number
+          cancelled_appointments: number
+          created_at: string
+          updated_at: string
+        }
+        Insert: {
+          id?: string
+          business_id: string
+          customer_id: string
+          added_date?: string
+          customer_notes?: string | null
+          is_active?: boolean
+          last_contact_date?: string | null
+          total_appointments?: number
+          cancelled_appointments?: number
+          created_at?: string
+          updated_at?: string
+        }
+        Update: {
+          id?: string
+          business_id?: string
+          customer_id?: string
+          added_date?: string
+          customer_notes?: string | null
+          is_active?: boolean
+          last_contact_date?: string | null
+          total_appointments?: number
+          cancelled_appointments?: number
+          created_at?: string
+          updated_at?: string
+        }
+      }
+      customer_communications: {
+        Row: {
+          id: string
+          business_id: string
+          customer_id: string
+          communication_type: 'sms' | 'whatsapp' | 'phone' | 'email'
+          message: string | null
+          sent_at: string
+          status: 'sent' | 'delivered' | 'failed'
+          created_at: string
+        }
+        Insert: {
+          id?: string
+          business_id: string
+          customer_id: string
+          communication_type: 'sms' | 'whatsapp' | 'phone' | 'email'
+          message?: string | null
+          sent_at?: string
+          status?: 'sent' | 'delivered' | 'failed'
+          created_at?: string
+        }
+        Update: {
+          id?: string
+          business_id?: string
+          customer_id?: string
+          communication_type?: 'sms' | 'whatsapp' | 'phone' | 'email'
+          message?: string | null
+          sent_at?: string
+          status?: 'sent' | 'delivered' | 'failed'
+          created_at?: string
         }
       }
     }

@@ -8,7 +8,11 @@ export default function CustomerProfile() {
   const { user, logout } = useAuth();
 
   const handleLogout = async () => {
-    await logout();
+    try {
+      await logout();
+    } catch (error) {
+      console.error('Çıkış yapılırken hata oluştu:', error);
+    }
   };
 
   const profileItems = [

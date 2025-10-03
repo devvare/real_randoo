@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { useRouter } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
-import { User, Store } from 'lucide-react-native';
+import { User, Store, UserCheck } from 'lucide-react-native';
 
 export default function RegisterType() {
   const router = useRouter();
@@ -13,6 +13,10 @@ export default function RegisterType() {
 
   const handleBusinessRegister = () => {
     router.push('/auth/register?type=business');
+  };
+
+  const handleStaffRegister = () => {
+    router.push('/auth/register?type=staff');
   };
 
   const handleBack = () => {
@@ -50,6 +54,18 @@ export default function RegisterType() {
               <Text style={styles.optionTitle}>İşletme Hesabı</Text>
               <Text style={styles.optionDescription}>
                 İşletmenizi yönetebilir, randevuları takip edebilir ve müşterilerinizle iletişim kurabilirsiniz
+              </Text>
+            </View>
+          </TouchableOpacity>
+
+          <TouchableOpacity style={styles.option} onPress={handleStaffRegister}>
+            <View style={styles.optionIcon}>
+              <UserCheck size={32} color="#6366f1" />
+            </View>
+            <View style={styles.optionContent}>
+              <Text style={styles.optionTitle}>Personel Hesabı</Text>
+              <Text style={styles.optionDescription}>
+                İşletme tarafından davet edildiniz. Bağlantı kodunuzla hesabınızı aktifleştirin
               </Text>
             </View>
           </TouchableOpacity>

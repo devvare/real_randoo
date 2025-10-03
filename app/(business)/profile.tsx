@@ -2,10 +2,26 @@ import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, ScrollView, Image } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import { useAuth } from '@/context/AuthContext';
-import { CreditCard as Edit3, Share2, Settings, ChartBar as BarChart3 } from 'lucide-react-native';
+import { Edit2, Share2, Settings, ChartBar as BarChart3 } from 'lucide-react-native';
+import { router } from 'expo-router';
 
 export default function BusinessProfile() {
   const { user } = useAuth();
+  
+  const navigateToEditProfile = () => {
+    // İşletme profil düzenleme sayfasına yönlendir
+    router.push('/_edit-profile');
+  };
+  
+  const navigateToShareProfile = () => {
+    // Paylaş sayfasına yönlendir
+    router.push('/_share');
+  };
+  
+  const navigateToSettings = () => {
+    // Ayarlar sayfasına yönlendir
+    router.push('/_settings');
+  };
 
   const statsData = [
     { title: 'Bugünkü Gelir', value: '₺1,250', color: '#10b981' },
@@ -21,10 +37,10 @@ export default function BusinessProfile() {
       <ScrollView style={styles.content}>
         <View style={styles.businessCard}>
           <View style={styles.cardHeader}>
-            <TouchableOpacity style={styles.editButton}>
-              <Edit3 size={20} color="#6366f1" />
+            <TouchableOpacity style={styles.editButton} onPress={navigateToEditProfile}>
+              <Edit2 size={20} color="#6366f1" />
             </TouchableOpacity>
-            <TouchableOpacity style={styles.shareButton}>
+            <TouchableOpacity style={styles.shareButton} onPress={navigateToShareProfile}>
               <Share2 size={20} color="#6366f1" />
             </TouchableOpacity>
           </View>
@@ -67,7 +83,7 @@ export default function BusinessProfile() {
         </View>
       </ScrollView>
 
-      <TouchableOpacity style={styles.settingsButton}>
+      <TouchableOpacity style={styles.settingsButton} onPress={navigateToSettings}>
         <Settings size={24} color="#ffffff" />
       </TouchableOpacity>
     </View>
@@ -78,6 +94,33 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#f8fafc',
+  },
+  modalOverlay: {
+    flex: 1,
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    justifyContent: 'flex-end',
+  },
+  modalContainer: {
+    backgroundColor: '#ffffff',
+    borderTopLeftRadius: 20,
+    borderTopRightRadius: 20,
+    padding: 20,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: -4 },
+    shadowOpacity: 0.1,
+    shadowRadius: 8,
+    elevation: 10,
+  },
+  modalItem: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingVertical: 16,
+  },
+  logoutText: {
+    fontSize: 16,
+    fontFamily: 'Inter-Medium',
+    color: '#ef4444',
+    marginLeft: 12,
   },
   content: {
     flex: 1,

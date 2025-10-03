@@ -20,8 +20,20 @@ export default function Login() {
     setIsLoading(true);
     try {
       await login(email, password);
-    } catch (error) {
-      Alert.alert('Hata', 'Giriş yapılırken bir hata oluştu');
+    } catch (error: any) {
+      console.error('Login error:', error);
+      
+      // Özel hata mesajlarını kontrol et
+      if (error.message === 'Lütfen e-posta adresinizi doğrulayın') {
+        Alert.alert(
+          'E-posta Doğrulama Gerekli', 
+          'Hesabınıza giriş yapabilmek için lütfen e-posta adresinize gönderilen doğrulama bağlantısını tıklayın.'
+        );
+      } else if (error.message?.includes('Invalid login credentials')) {
+        Alert.alert('Hata', 'E-posta veya şifre hatalı');
+      } else {
+        Alert.alert('Giriş Hatası', error.message || 'Giriş yapılırken bir hata oluştu');
+      }
     } finally {
       setIsLoading(false);
     }

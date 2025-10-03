@@ -58,6 +58,12 @@ export default function CustomerTabLayout() {
           ),
         }}
       />
+      
+      {/* Alt menüde görünmemesi gereken sayfalar */}
+      <Tabs.Screen name="booking" options={{ href: null }} />
+      <Tabs.Screen name="booking-confirmation" options={{ href: null }} />
+      <Tabs.Screen name="business/[id]" options={{ href: null }} />
+      <Tabs.Screen name="service/[id]" options={{ href: null }} />
     </Tabs>
   );
 }
